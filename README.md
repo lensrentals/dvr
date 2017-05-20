@@ -1,3 +1,8 @@
+# Note
+
+This is a copy of ochestrate-io's dvr library repo that is no longer hosted on
+github.
+
 # DVR
 
 DVR is a library for capturing and replaying HTTP calls for golang tests.
@@ -5,7 +10,7 @@ DVR is a library for capturing and replaying HTTP calls for golang tests.
 ## Installation
 
 ```bash
-go get github.com/orchestrate-io/dvr
+go get github.com/cintosyntax/dvr
 ```
 
 ## Usage
