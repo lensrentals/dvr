@@ -23,6 +23,7 @@ import (
 	"os"
 	"os/exec"
 	"sync"
+	"time"
 )
 
 var (
@@ -34,6 +35,9 @@ var (
 	// them rather than allowing requests to be made to the real internet
 	// service.
 	replay bool
+
+	// Set to the time the recordFile was last modified.
+	replayTimestamp time.Time
 
 	// If this is true then the user forced the client into pass through
 	// mode which disables record and replay.
@@ -127,6 +131,15 @@ func IsPassingThrough() bool {
 func IsReplay() bool {
 	_, b := mode()
 	return b
+}
+
+// ReplayTimestamp returns the modification time of the recordFile.
+func ReplayTimestamp() time.Time {
+	if IsReplay() {
+		// Ensure that the replay system is setup.
+		isSetup.Do(DefaultRoundTripper.(*roundTripper).replaySetup)
+	}
+	return replayTimestamp
 }
 
 // A simple error type that wraps all library panics.

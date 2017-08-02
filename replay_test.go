@@ -19,6 +19,7 @@ import (
 	"net/url"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/liquidgecka/testlib"
 )
@@ -141,6 +142,7 @@ func TestBadVersion(t *testing.T) {
 	replay = true
 	passThrough = false
 	DefaultReplay = false
+	replayTimestamp = time.Time{}
 	fileName = fd.Name()
 
 	// Write all zeros to the temp file which will be version 0.

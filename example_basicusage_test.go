@@ -19,7 +19,7 @@ import (
 	"net/url"
 	"testing"
 
-	_ "github.com/orchestrate-io/dvr"
+	_ "github.com/lensrentals/dvr"
 )
 
 // When running this test you can run it in one of three modes:

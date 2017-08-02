@@ -106,6 +106,12 @@ func (r *roundTripper) replaySetup() {
 	fd, err := os.OpenFile(fileName, os.O_RDONLY, os.FileMode(755))
 	panicIfError(err)
 
+	if fi, err := fd.Stat(); err != nil {
+		panicIfError(err)
+	} else {
+		replayTimestamp = fi.ModTime()
+	}
+
 	// Read the file version in.
 	version := uint32(0)
 	err = binary.Read(fd, binary.BigEndian, &version)
