@@ -25,6 +25,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"time"
 )
 
 //
@@ -290,6 +291,9 @@ type gobQuery struct {
 
 	// This stores the information from the Response object.
 	Response *gobResponse
+
+	// This stores the time of the Request/Response
+	Timestamp time.Time
 
 	// This stores the error returned from the RoundTrip call.
 	Error gobError

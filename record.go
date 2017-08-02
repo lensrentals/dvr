@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"time"
 )
 
 // If this value is anything other than nil it will be called on a copy
@@ -73,8 +74,8 @@ func (r *roundTripper) record(req *http.Request) (*http.Response, error) {
 	// Ensure that recording is setup.
 	isSetup.Do(r.recordSetup)
 
-	// The structure that saves all of our transmitted data.
-	q := &gobQuery{}
+	// The structure that saves all of our transmitted data with a timestamp.
+	q := &gobQuery{Timestamp: time.Now()}
 	q.Request = newGobRequest(req)
 
 	if req.Body != nil {

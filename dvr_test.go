@@ -444,36 +444,14 @@ func TestReplayTimestamp(t *testing.T) {
 	T := testlib.NewT(t)
 	defer T.Finish()
 	T.AddFinalizer(func() { replay = false })
-
-	fd := T.TempFile()
-	isSetup = sync.Once{}
-	record = false
-	passThrough = false
-	DefaultReplay = false
-	fileName = fd.Name()
-
-	// Write all zeros to the temp file which will be version 0.
-	// This will cause replaySetup to fail, but after the point that
-	// replayTimestamp is set.. which is sufficient.
-	_, err := fd.Write([]byte{0, 0, 0, 0})
-	T.ExpectSuccess(err)
-	T.ExpectSuccess(fd.Close())
-
-	test_replayTimestamp_IsZero := func(zeroTime bool) {
-		defer func() {
-			recover()
-			T.Equal(replayTimestamp.IsZero(), zeroTime)
-		}()
-
-		replayTimestamp = time.Time{}
-		ReplayTimestamp()
-	}
+	isSetup.Do(func() {})
 
 	replay = false
-	test_replayTimestamp_IsZero(true)
+	T.Equal(ReplayTimestamp().IsZero(), true)
 
 	replay = true
-	test_replayTimestamp_IsZero(false)
+	replayTimestamp = time.Now()
+	T.Equal(ReplayTimestamp().IsZero(), false)
 }
 
 func TestIsMode(t *testing.T) {

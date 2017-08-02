@@ -106,12 +106,6 @@ func (r *roundTripper) replaySetup() {
 	fd, err := os.OpenFile(fileName, os.O_RDONLY, os.FileMode(755))
 	panicIfError(err)
 
-	if fi, err := fd.Stat(); err != nil {
-		panicIfError(err)
-	} else {
-		replayTimestamp = fi.ModTime()
-	}
-
 	// Read the file version in.
 	version := uint32(0)
 	err = binary.Read(fd, binary.BigEndian, &version)
@@ -144,6 +138,10 @@ func (r *roundTripper) replaySetup() {
 		// Read the results from the stream.
 		gobQuery := gobQuery{}
 		panicIfError(gobDecoder.Decode(&gobQuery))
+
+		if replayTimestamp.IsZero() {
+			replayTimestamp = gobQuery.Timestamp
+		}
 
 		// Add the query to the list.
 		requestList = append(requestList, gobQuery.RequestResponse())
