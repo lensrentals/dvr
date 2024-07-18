@@ -25,19 +25,22 @@ import (
 // When running this test you can run it in one of three modes:
 //
 // Pass through: In this mode nothing is recorded or replayed.
-//   go test .
+//
+//	go test .
 //
 // Recording: In this mode all HTTP calls are recorded into a file (the default
-//            is testdata/archive.dvr, and is control by -dvr.file)
-//   go test -dvr.record .
+//
+//	         is testdata/archive.dvr, and is control by -dvr.file)
+//	go test -dvr.record .
 //
 // Replay: In this mode all HTTP calls are replayed from the recording file
-//         captured in Recording mode above.
-//   go test -dvr.replay .
 //
-// * Note that this function needs the leading underscore removed in order
-//   to work in the real world. It exists purely because of the rules around
-//   "playable" document examples.
+//		      captured in Recording mode above.
+//		go test -dvr.replay .
+//
+//	  - Note that this function needs the leading underscore removed in order
+//	    to work in the real world. It exists purely because of the rules around
+//	    "playable" document examples.
 func _TestCallToApi(t *testing.T) {
 	var err error
 	req := &http.Request{}
