@@ -198,7 +198,6 @@ type gobRequest struct {
 	Trailer          http.Header
 	RemoteAddr       string
 	RequestURI       string
-	TLS              *tls.ConnectionState
 
 	// The request body and err returned when reading it.
 	Body  []byte
